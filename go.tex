@@ -1,0 +1,98 @@
+\documentclass[a4paper,12pt,twoside]{article}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{} % Kopf- und Fußzeilen leeren
+\fancyfoot[C]{\thepage} % Seitenzahl zentriert in der Fußzeile
+\usepackage[hidelinks]{hyperref}
+\usepackage{listing}
+
+% Titelseite
+\title{Ich lerne GO}
+\author{Tobi}
+\date{\today}
+
+\begin{document}
+
+% Titelseite
+\maketitle
+\thispagestyle{empty} % Keine Kopf-/Fußzeile auf der Titelseite
+\newpage
+
+% Inhaltsverzeichnis
+\tableofcontents
+\newpage
+
+% Beispielkapitel
+\section{Ausführen}
+\begin{tabbing}
+  \hspace{2mm} \= \hspace{50mm} \= \kill
+\>  go run bunga.go \> Lässt das Proglaufen ohne zu compilieren \\
+\>  go build bunga.go \> compiliert das Programm \\ 
+\>  ./bunga.go \> startet das compilierte Programm \\ 
+\>  dlv debug bunga.go \> startet das Programm im Debugger \\
+\end{tabbing}
+
+\section{Syntax}
+\begin{tabbing}
+ \hspace{2mm} \= \hspace{50mm} \= \kill
+  \> // \> Kommentare \\
+\end{tabbing}
+\section{Debugger}
+\section{Ein und Ausgabe}
+\subsection{Ausgabe}
+\begin{tabbing}
+ \hspace{2mm} \= \hspace{50mm} \= \kill
+ \> \verb|fmt.print("bunga")| \> Ausgabe von Bunga \\
+ \> \verb|fmt.print("%#v", per)| \> gibt die Variable per aus \\
+ \> \verb|fmt.print("%d", X)| \> gibt den Wert von X aus \\
+\end{tabbing}
+
+\section{Variablen}
+\begin{tabbing}
+ \hspace{2mm} \= \hspace{50mm} \= \kill
+ \> var a int \> deklariert die Variabla a als int
+\end{tabbing}
+
+\section{Datentypen}
+\begin{tabbing}
+ \hspace{2mm} \= \hspace{50mm} \= \kill
+ \> int \> Ganzzahl, Größe ist plattformabhänging \\
+ \> int8, int16, int32, int64 \> Ganzzahl \\
+ \> uint8, uint16, uint32, uint64 \> Vorzeichenlose Ganzzahl \\
+ \> float32, float64 \> Gleitkommazahl \\ 
+ \> bool \> ture oder false \\ 
+ \> rune \> int32 \\ 
+ \> byte \> uint8 \\
+ \> string \> Zeichnkette \\ 
+ \> interface{} \> kann jeden Datentypen halten \\
+ \> array \> Array feste Länge \\ 
+ \> slice \> Array variable Länge \\ 
+ \> map \> Hashmap/Dictionary \\ 
+ \> struct \> Benutzerdefinierte Struktur \\ 
+ \> pointer \> zeigt Adresse einer Variable \\
+\end{tabbing}
+
+\section{Schleifen}
+\section{Funktionen}
+\section{Mutliprozess}
+\section{Pakete}
+\begin{tabbing}
+ \hspace{2mm} \= \hspace{50mm} \= \kill
+\> fmt \> Ein und Ausgabe im CLI \\
+\end{tabbing}
+
+
+\section{Installation}
+\subsection{Arch Linux}
+\begin{itemize}
+  \item Compiler \verb| sudo pacman -Sy go |
+  \item Debugger \verb| sudo pacman -Sy delve |
+  \item LSP \verb| go install golang.org/x/tools/gopls@latest |
+  \item Linter \verb| go install github.com/segmentio/golines@latest |
+\end{itemize}
+\end{document}
+
