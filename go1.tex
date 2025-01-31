@@ -1,0 +1,439 @@
+\documentclass[twoside,a4paper,12pt]{article}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{ulem}
+\usepackage{graphicx} % Für Bilder
+
+\usepackage[a4paper, top=2.5cm, bottom=3cm, left=2cm, right=2.5cm]{geometry}
+
+% Catppuccin Macchiato Farbschema für Listings
+\definecolor{catppuccinBg}{HTML}{24273A}
+\definecolor{catppuccinFg}{HTML}{CAD3F5}
+\definecolor{catppuccinRed}{HTML}{ED8796}
+\definecolor{catppuccinGreen}{HTML}{A6DA95}
+\definecolor{catppuccinYellow}{HTML}{EED49F}
+\definecolor{catppuccinBlue}{HTML}{8AADF4}
+\definecolor{catppuccinMagenta}{HTML}{F5BDE4}
+\definecolor{catppuccinCyan}{HTML}{8BD5CA}
+
+\lstset{
+    backgroundcolor=\color{catppuccinBg},
+    basicstyle=\ttfamily\color{catppuccinFg},
+    keywordstyle=\color{catppuccinBlue},
+    commentstyle=\color{catppuccinGreen},
+    stringstyle=\color{catppuccinRed},
+    numberstyle=\tiny\color{catppuccinYellow},
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+% Kopf- und Fußzeile
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\thepage} % Seitenzahl mittig in der Fußzeile
+\renewcommand{\headrulewidth}{0.4pt}
+
+\fancyhead[LE,RO]{Ich lerne Go} % Titel links auf linken und rechten Seiten
+\fancyhead[LO,RE]{Tobi} % Autor rechts auf linken und rechten Seiten
+
+\title{Ich lerne Go}
+\author{Tobi}
+
+\begin{document}
+
+% Titelseite
+\maketitle
+\thispagestyle{empty} % Keine Kopf-/Fußzeile auf der Titelseite
+\newpage
+
+% Inhaltsverzeichnis
+\tableofcontents
+\newpage
+
+\section{Interaktion}
+\subsection{Eingabe}
+\begin{tabbing}
+  \hspace{2mm} \= \hspace{70mm} \= \kill
+  \> \verb| fmt.Scanln | \> Eingabe bis zum Enter \\  
+  \> \verb| fmt.Scan | \> Werte getrennt durch Leerzeichen \\ 
+  \> \verb| fmt.Scanf | \> Formatierte Eingabe \\ 
+  \> \verb| os.Args | \> Ubergabe von Argumenten \\ 
+  \> \verb| os.Getenv | \> Einlesen von Umgebungsvariablen \\
+  \> \verb| bufio.Reader | \> größere Eingaben oder Zeilenweise \\ 
+  \> \verb| bufio.Scanner | \>  Scant Tokens in Text oder Eingabe \\
+\end{tabbing}
+\subsection{Ausgabe}
+\begin{tabbing}
+  \hspace{2mm} \= \hspace{70mm} \= \kill
+  \> \verb| fmt.Println | \> Ausgabe mit Zeilenumbruch \\ 
+  \> \verb| fmt.Print | \> Einfache Ausgabe \\ 
+  \> \verb| fmt.Printf | \> Formatierte Ausgabe \\ 
+  \> \verb| fmt.Sprintf | \> Ausgabe eines Formatierten Strings \\ 
+  \> \verb| fmt.Fprintf | \> schreibt in eine Datei \\ 
+  \> \verb| os.Stdout | \> schreibt in eine Datei \\ 
+  \> \verb| os.Stderr | \> schreibt eine Fehlermeldung in eine Datei \\ 
+\end{tabbing}
+\subsection{fmt Steuerzeichen}
+\begin{tabbing}
+  \hspace{2mm} \= \hspace{70mm} \= \kill
+  \> \verb| \n | \> Zeilenumbruch \\ 
+  \> \verb| \t | \> Tabular, Einrücken \\ 
+  \> \verb| \\ | \> Backslash \\ 
+  \> \verb| \" | \> Anführungszeichen \\ 
+\end{tabbing}
+\subsection{Plotten}
+
+\section{Syntax}
+\begin{tabbing}
+  \hspace{2mm} \= \hspace{70mm} \= \kill
+  \> \verb| // | \> Kommentar in einer Zeile \\
+  \> \verb| /*   */ | \> Kommmentar über mehrere Zeilen \\ 
+  \> \verb| () | \> Bedingungen, Definitionen, Funktionsaufrufe \\ 
+  \> \verb| {} | \> Code-Blöcke \\ 
+  \> \verb| : | \> Kurzdeklarationen \\ 
+  \> \verb| ; | \> Trennung von z.B. Argumenten \\ 
+  \> \verb| " " | \> Strings \\ 
+  \> \verb| ' ' | \> Runes \\ 
+\end{tabbing}
+
+\section{Abfragen}
+\subsection{if}
+\begin{center}
+  \begin{minipage}{1.0\textwidth}
+    \begin{lstlisting}[language=Go]
+    if Bedingung1 {
+      // Wenn Bedingung1 erfuellt
+    } else if Bedingung2 {
+      // Wenn Bedingung2 erfuellt
+    } else {
+      // Wenn keine Bedingung erfuellt
+    }
+    \end{lstlisting}
+  \end{minipage}
+\end{center}
+
+\subsection{switch}
+\begin{center}
+  \begin{minipage}{1.0\textwidth}
+    \begin{lstlisting}[language=Go]
+    switch tag {
+    case "Mittwoche":
+      // Was wenn es Mittwoch ist? 
+    case "Donnerstag":
+      // Was wenn es Donnerstag ist?
+    case "Freitag", "Samstag", "Sonntag":
+      // Verlaengertes Wochenende 
+    default:
+      // Wenn Kein Tag ist
+    }
+    \end{lstlisting}
+  \end{minipage}
+\end{center}
+
+\subsection{typ-switch}
+\begin{center}
+  \begin{minipage}{1.0\textwidth}
+    \begin{lstlisting}[language=Go]
+    switch t := t.(type) {
+    case bool:
+     // Wenn t bool
+    case int:
+      // Wenn t int 
+    case *bool:
+      // Wenn t der Pointer einer bool 
+    default: 
+      // Datentyp von t nicht dabei
+    } 
+    \end{lstlisting}
+  \end{minipage}
+\end{center}
+
+\subsection{select}
+\begin{center}
+  \begin{minipage}{1.0\textwidth}
+    \begin{lstlisting}[language=Go]
+    select {
+    case msg1 := <-chl1:
+      // Nachricht von Prozess1 oder Kanal1 
+    case msg2 := <-chl2:
+      // Nachricht von Prozess2 oder Kanal2
+    default:
+      // Opriton wenn keine Nachricht, default, 
+      // sollte verwendet werden, muss aber nicht
+    }
+    \end{lstlisting}
+  \end{minipage}
+\end{center}
+
+\section{Schleifen}
+\subsection{for}
+\begin{center}
+  \begin{minipage}{1.0\textwidth}
+    \begin{lstlisting}[language=Go]
+    for Initialisierung; Bedingung; Nachbearbeitung {
+      // Schleifeninhalt
+    }
+    \end{lstlisting}
+  \end{minipage}
+\end{center}
+\textbf{Initialisierung:} Initialisert eine oder mehrere Variablen, \\ 
+Die in der Schleife verwendet werden, wird nur am Anfang der Schleife gemacht \\ 
+\textbf{Bedingung:} wird vor jeder Iteration ausgewertet, bei true wird \\ 
+der Inhalt der Schleife ausgeführt \\ 
+\textbf{Nachbearbeitung:} wird am Ende jeder Iteration gemacht, \\ 
+z.B. hochzählen des Zählers \\ 
+
+\subsection{for mit break}
+\begin{center}
+  \begin{minipage}{1.0\textwidth}
+    \begin{lstlisting}[language=Go]
+    for i := 0; i < 10; i++ {
+      if i == 5 {
+        break // Schleife wird beendet, wenn 5 erreicht ist
+      }
+      // Iterationen 0 bis 4
+    }
+    \end{lstlisting}
+  \end{minipage}
+\end{center}
+
+\subsection{for mit continue}
+\begin{center}
+  \begin{minipage}{1.0\textwidth}
+    \begin{lstlisting}[language=Go]
+    for i := 0; i < 10; i++ {
+      if i == 5 {
+        continue // Aktion der Schleife wird ueberprungen wenn i = 5 
+      }
+      // Iterationen 0 bis 4; 6 bis 10
+    }
+    \end{lstlisting}
+  \end{minipage}
+\end{center}
+
+\subsection{for mit range}
+\begin{center}
+  \begin{minipage}{1.0\textwidth}
+    \begin{lstlisting}[language=Go]
+    for index, value := range collection {
+      // Schleifeninhalt
+    }
+
+    // wenn nur Value benoetigt
+    for _, value := range collection { 
+      // Schleifeninhalt
+    }
+
+    // wenn nur der Index benoetigt 
+    for index := range collection {
+      // Schleifeninhalt 
+    }
+    \end{lstlisting}
+  \end{minipage}
+\end{center}
+\textbf{index:} Dies ist der Index, oder die Position des aktuellen Elements \\ 
+\textbf{value:} Dies ist das aktuelle Element \\ 
+\textbf{collection:} Dies ist die Sammlung in der das Element ist \\
+
+\subsection{while pseudo}
+\begin{center}
+  \begin{minipage}{1.0\textwidth}
+    \begin{lstlisting}[language=Go]
+    sum := 1 
+    for sum < 1000 { 
+      sum += sum
+    }
+    \end{lstlisting}
+  \end{minipage}
+\end{center}
+
+\section{Operatoren}
+\subsection{Standard}
+\subsection{Mathematisch}
+\subsection{Logisch}
+
+\section{Variablen}
+\subsection{Variablen}
+\subsection{Umwandeln}
+\subsection{Global}
+\subsection{Lokal}
+
+\section{Mathematik}
+\subsection{Standard}
+\subsection{Exponential}
+\subsection{Vektor}
+\subsection{Trigonometrie}
+
+\section{Datenmanagement}
+\subsection{Speichern}
+\subsection{Laden}
+\subsection{Einlesen}
+\subsection{Parsen}
+
+\section{Speichermanagement}
+
+\section{Fehlermanagement}
+\subsection{Exception}
+\subsection{Error}
+
+\section{Regeln}
+
+\section{Multiprozess}
+
+\section{Bibliotheken}
+\subsection{fmt}
+
+\subsection{os}
+
+\subsection{bufio}
+
+\section{Ausführen}
+\subsection{Kompilieren/Ausführen}
+\begin{tabbing}
+  \hspace{2mm} \= \hspace{50mm} \= \kill
+  \> go run bunga.go \> führt das Programm aus, ohne kompilieren \\ 
+  \> go build bunga.go \> kompiliert das Programm \\ 
+  \> ./bunga.go \> führt das kompilierte Programm aus \\ 
+  \> \verb|.\bunga.exe| \> führt das kompilierte Programm aus (Windows) \\
+  \> Cross-Kompilierung, erstellt unter Linux ein Programm für Windows \\
+  \> GOOS=windows GOARCH=amd64 go build bunga.go \\
+  \> GOOS=linux GOARCH=amd64 go build bunga.go \\ 
+  \> GOOS=darwin GOARCH=amd64 go build bunga. go (macOS)\\
+\end{tabbing}
+\subsection{Debugging}
+\begin{tabbing}
+  \hspace{2mm} \= \hspace{50mm} \= \kill
+  \> dlv debug bunga.go \> starten das Programm im Debugger \\
+\end{tabbing}
+
+\newpage
+\section{Hello World!}
+\begin{center}
+  \begin{minipage}{1.0\textwidth}
+    \begin{lstlisting}[language=Go]
+      pacman main
+
+      import "fmt"
+
+      func main(){
+        fmt.Println("Hello World!")
+      }
+    \end{lstlisting}
+  \end{minipage}
+\end{center}
+
+\section{Installation}
+\subsection{Kompiler/Interpreter}
+\subsubsection{Arch Linux}
+\begin{tabbing}
+  \hspace{2mm} \= \hspace{30mm} \= \kill
+  \> Kompiler \> \verb|sudo pacman -Sy go| \\ 
+  \> überprüfen \> \verb|go version| \\
+\end{tabbing}
+\subsubsection{Windows}
+\begin{tabbing}
+  \hspace{2mm} \= \hspace{30mm} \= \kill
+  \> Kompiler \> \href{https://go.dev/doc/install}{Link zu golang.org} \\
+  \> überprüfen \> \verb|go version| \\
+\end{tabbing}
+\subsection{Debugger}
+\subsubsection{Arch Linux}
+\begin{tabbing}
+  \hspace{2mm} \= \hspace{30mm} \= \kill
+  \> Debugger \> \verb|sudo pacman -Sy delve| \\
+\end{tabbing}
+\subsubsection{Windows}
+\begin{tabbing}
+  \hspace{2mm} \= \hspace{30mm} \= \kill
+  \> Debugger \> \verb|go install github.com/go-delve/delve/cmd/dlv@latest| \\
+\end{tabbing}
+\subsection{LSP}
+\begin{tabbing}
+  \hspace{2mm} \= \hspace{30mm} \= \kill
+  \> LSP \>  \verb|go install golang.org/x/tools/gopls@latest| \\
+  \> Linter \> \verb|go install github.com/segmentio/golines@latest| \\
+\end{tabbing}
+\subsection{Bibliothekeninstaller}
+\begin{tabbing}
+  \hspace{2mm} \= \hspace{30mm} \= \kill
+  \> Go-Pakete \> \verb|go get -u github.com/username/repository|
+ \end{tabbing}
+\subsection{Sonstiges}
+\subsubsection{Umgebungsvariablen Windows}
+\begin{itemize}
+  \item GOPATH: Standardmäßig \verb|C:\Users\<Benutzer>\go|
+  \item GOROOT: Standardmäßig der Installationspfad von Go
+  \item PATH: Enthält \verb|%GOPATH%\bin| und \verb|%GOROOT%\bin|
+\end{itemize}
+
+\end{document}
+
+%# ==========  
+%# ==========  
+%# ==========  
+%# ==========  
+%# ==========  
+\subsection{tabbing}
+\begin{tabbing}
+  \hspace{2mm} \= \hspace{50mm} \= \kill
+  
+\end{tabbing}
+
+\subsection{Durchgestrichene Zeile}
+Dies ist eine \sout{durchgestrichene} Zeile.
+
+\subsection{Links}
+Hier ist ein \href{https://github.com}{Link zu GitHub}.
+
+\begin{center}
+  \begin{minipage}{0.9\textwidth}
+    \begin{lstlisting}[language=Go]
+    package main
+
+    import "fmt"
+
+    func main() {
+      fmt.Println("Hallo, Welt!")
+    }
+    \end{lstlisting}
+  \end{minipage}
+\end{center}
+
+\subsection{Bilder}
+%\begin{figure}[h]
+%    \centering
+%    \includegraphics[width=0.5\textwidth]{deinbild} % Ersetze "deinbild" durch den Namen deiner Bilddatei
+%    \caption{Ein Beispielbild}
+%    \label{fig:beispielbild}
+%\end{figure}
+
+\subsection{Tabellen}
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        A & B & C \\
+        \hline
+        1 & 2 & 3 \\
+        \hline
+        4 & 5 & 6 \\
+        \hline
+    \end{tabular}
+    \caption{Eine Beispiel-Tabelle}
+    \label{tab:beispieltabelle}
+\end{table}
+
+
