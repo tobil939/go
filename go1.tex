@@ -22,12 +22,12 @@
 \definecolor{catppuccinCyan}{HTML}{8BD5CA}
 
 \lstset{
-    backgroundcolor=\color{catppuccinBg},
-    basicstyle=\ttfamily\color{catppuccinFg},
-    keywordstyle=\color{catppuccinBlue},
-    commentstyle=\color{catppuccinGreen},
-    stringstyle=\color{catppuccinRed},
-    numberstyle=\tiny\color{catppuccinYellow},
+    backgroundcolor=\color{white},
+    basicstyle=\ttfamily\color{black},
+    keywordstyle=\color{blue},
+    commentstyle=\color{green},
+    stringstyle=\color{red},
+    numberstyle=\tiny\color{black}, % Zeilennummern auf schwarz setzen
     breakatwhitespace=false,
     breaklines=true,
     captionpos=b,
@@ -63,6 +63,49 @@
 \tableofcontents
 \newpage
 
+\section{Paket}
+Dateien im gleichen Verzeichnis können in einem Paket verlinkt sein. \\
+Exportierte Variablen sind dann auch in diesem Paket verwendbar.
+\subsection{Verzeichnis}
+\begin{itemize}
+  \item Ordner Horst
+  \begin{itemize}
+    \item bunga.go
+    \item utils.go
+  \end{itemize}
+\end{itemize}
+\subsection{Hauptprogramm}
+\begin{center}
+  \begin{minipage}{1.0\textwidth}
+    \begin{lstlisting}[language=Go]
+    package main
+    
+    import (
+      "fmt"
+      "Horst/utils"
+    )
+
+    func main(){
+      fmt.Println("Hello from bunga.go")
+      result := utils.Add(3, 4)
+      fmt.Printf("3 + 4 = %d\n", result)
+    }
+    \end{lstlisting}
+  \end{minipage}
+\end{center}  
+\subsection{Unterprogramm}
+\begin{center}
+  \begin{minipage}{1.0\textwidth}
+    \begin{lstlisting}[language=Go]
+    package main
+
+    func Add(a, b int) int {
+      return a + b
+    }
+    \end{lstlisting}
+  \end{minipage}
+\end{center}
+
 \section{Interaktion}
 \subsection{Eingabe}
 \begin{tabbing}
@@ -94,11 +137,39 @@
   \> \verb| \\ | \> Backslash \\ 
   \> \verb| \" | \> Anführungszeichen \\ 
 \end{tabbing}
+\subsection{Formatierungen fmt.Printf()}
+\begin{tabbing}
+ \hspace{2mm} \= \hspace{30mm} \= \kill
+  \> \%d \>Dezimalzahl (Basis 10) \\
+  \> \%b \>Binär (Basis 2) \\
+  \> \%o \>Oktal (Basis 8) \\
+  \> \%x \>Hexadezimal (Basis 16) klein geschrieben  \\
+  \> \%X \>Hexadezimal (Basis 16) groß geschrieben  \\
+  \> \%c \>Unicode-Codepunkt \\
+  \> \%f \>Gleitkommazahl  \\
+  \> \%e \>Exponent e  \\
+  \> \%E \>Exponent E  \\
+  \> \%g \>wählt zwischen \%f \%e \%E basierend auf der Größe der Zahl  \\
+  \> \%G \>wählt zwischen \%f \%e \%E basierend auf der Größe der Zahl \\
+  \> \%s \>String  \\
+  \> \%q \>String mit Anführungszeichen \\
+  \> \%t \>Bool \\
+  \> \%\% \>Prozentzahl \\
+  \> \%v \> Standard-Formatierung \\ 
+  \> \%+v \> Standard-Formatierung gibt aber den Feldnamen mit dazu \\ 
+  \> \%\#v \>gibt den Wert an wie er in Go-Code geschreiben ist \\ 
+  \> \%T \> gibt den Datentypen der Variable aus \\
+  \> \%5d \> Dezimalzahl mit 5 Zeichen \\ 
+  \> \%05d \> Dezimalzahl mit 5 Zeichen, Rest wird mit 0 aufgefüllt \\ 
+  \> \%.2f \> Gleitkommazahl mit 2 Nachkommastellen \\ 
+  \> \%5.2f \> Gleitkommazahl mit 5 Zeichen vor dem Komma und 2 danach \\
+\end{tabbing}
+
 \subsection{Plotten}
 
 \section{Syntax}
 \begin{tabbing}
-  \hspace{2mm} \= \hspace{70mm} \= \kill
+  \hspace{2mm} \= \hspace{30mm} \= \kill
   \> \verb| // | \> Kommentar in einer Zeile \\
   \> \verb| /*   */ | \> Kommmentar über mehrere Zeilen \\ 
   \> \verb| () | \> Bedingungen, Definitionen, Funktionsaufrufe \\ 
@@ -261,30 +332,413 @@ z.B. hochzählen des Zählers \\
 \end{center}
 
 \section{Operatoren}
-\subsection{Standard}
 \subsection{Mathematisch}
+\begin{tabbing}
+ \hspace{2mm} \= \hspace{30mm} \= \kill
+ \> \verb| +-*/<>;>=;<= | \> wie gehabt \\ 
+ \> \verb| % |\> Modulo \\ 
+ \> \verb| == | \> Gleichheitsabfrage \\ 
+ \> \verb| != | \> Ungleichheitsabfrage \\ 
+ \> \verb| 10^3 | \> siehe \ref{sec:math} \\
+ \> \verb| =  | \> Zuweisung, z.B. \verb|a = 5; a = a + 3| $\rightarrow$ \verb|a = 8| \\ 
+ \> \verb| += | \> Addition mit Zuweisung, \verb|a += 3| $\rightarrow$ \verb|a = a + 3| \\ 
+ \> \verb| -= | \> Subtraktion mit Zuweisung, \verb|a -= 3| $\rightarrow$ \verb|a = a - 3| \\ 
+ \> \verb| *= | \> Multiplikation mit Zuweisung, \verb|a *= 3| $\rightarrow$ \verb|a = a * 3| \\ 
+ \> \verb| /= | \> Division mit Zuweisung, \verb|a /= 3| $\rightarrow$ \verb|a = a / 3| \\ 
+ \> \verb| %= | \> Modulo mit Zuweisung, \verb|a %= 3| $\rightarrow$ \verb|a = a \% 3| \\
+\end{tabbing}
 \subsection{Logisch}
+\begin{tabbing}
+ \hspace{2mm} \= \hspace{30mm} \= \kill
+  \> \verb| && | \> und \\ 
+  \> \hspace{1mm}  $||$ \> oder \\ 
+  \> \verb| !a | \> nicht a \\
+  \> \verb| ^ | \> xor \\
+\end{tabbing}
+\subsection{bitweise Operatoren}
+\begin{tabbing}
+ \hspace{2mm} \= \hspace{30mm} \= \kill
+ \> \verb|&| \> und \verb|a = 5; b = 3; a & b| $\rightarrow$ \verb|0101 & 0011 = 0001| \\ 
+ \> \verb|&| \> und \verb|a = 5; b = 3; a & b| $\rightarrow$ \verb|0101 & 0011 = 0001| \\ 
+ \> \verb||| \> oder \verb|a = 5; b = 3; a | b| $\rightarrow$ \verb|0101 | 0011 = 0111| \\ 
+ \> \verb|^| \> XOR \verb|a = 5; b = 3; a ^ b| $\rightarrow$ \verb|0101 ^ 0011 = 0110| \\ 
+ \> \verb|^a| \> nicht \verb|a = 5; ^a| $\rightarrow$ \verb|0101 = 1010 (Dezimal -6)| \\
+ \> \verb|a >> 1| \> \verb|a = 5; a >> 1; 0101 -> 0010| \\
+ \> \verb|a << 1| \> \verb|a = 5; a << 1; 0101 -> 1010| \\
+ \> \verb|&= | \> Bitweises und mit Zuweisung, \verb|a &= 3| $\rightarrow$ \verb|a = a & 3| \\ 
+ \> $|= $ \> Bitweises oder mit Zuweisung, \verb|a |= 3| $\rightarrow$ \verb|a = a | 3| \\ 
+ \> \verb|^= | \> Bitweises XOR mit Zuweisung, \verb|a ^= 3| $\rightarrow$ \verb|a = a ^ 3| \\ 
+ \> \verb|>>=| \> Bitweise Rechtsverschiebung mit Zuweisung, \verb|a >>= 1| $\rightarrow$ \verb|a = a >> 1| \\ 
+ \> \verb|<<=| \> Bitweise Linksverschiebung mit Zuweisung, \verb|a <<= 1| $\rightarrow$ \verb|a = a << 1| \\
+\end{tabbing}
 
 \section{Variablen}
-\subsection{Variablen}
-\subsection{Umwandeln}
-\subsection{Global}
-\subsection{Lokal}
+\subsection{Datentypen}
+\begin{tabbing}
+ \hspace{2mm} \= \hspace{50mm} \= \kill
+ \> int \> Ganzzahl, Größe ist plattformabhänging \\
+ \> int8, int16, int32, int64 \> Ganzzahl \\
+ \> uint8, uint16, uint32, uint64 \> Vorzeichenlose Ganzzahl \\
+ \> float32, float64 \> Gleitkommazahl \\ 
+ \> complex64, complex128 \> Komplexe Zahlen 1+2i \\
+ \> bool \> true oder false \textbf{Wenn nicht zugewiesens, False} \\ 
+ \> rune \> int32 string in ASCII\\ 
+ \> byte \> uint8 \\
+ \> string \> Zeichenkette \\ 
+ \> interface{} \> kann jeden Datentypen halten \\
+ \> array \> Array feste Länge \\ 
+ \> slice \> Array variable Länge \\ 
+ \> map \> Hashmap/Dictionary \\ 
+ \> struct \> Benutzerdefinierte Struktur \\ 
+ \> pointer \> zeigt Adresse einer Variable \\
+ \end{tabbing}
+\subsection{Umwandeln von var und const}
+\begin{center}
+  \begin{minipage}{1.0\textwidth}
+    \begin{lstlisting}[language=Go]
+    var a int = 43              // a als int mit 42
+    var b float32 = float32(a)  // b wird mit Wert von a
+                                // als float32 geschrieben
+
+    const c = 43                // Konstante c
+    var d float32 = float32(c)  // int nun in eine float32
+                                // speichtern
+
+
+    const e int = 43            // Konstante e als int definierten
+    var f float32 = float32(f)  // ini nun in float32 
+                                // speichern
+    \end{lstlisting}
+  \end{minipage}
+\end{center}  
+
+\subsection{Global Variable exportiert}
+Variable mit großem Anfangsbuchstaben sind exportiert \\ 
+und können von anderern Paketen verwendet werden. \\ 
+\begin{tabbing}
+ \hspace{2mm} \= \hspace{50mm} \= \kill
+ \> \verb|var I int = 33| \>deklariert die Variable I als int und weist 33 zu. \\ 
+ \> \sout{I := 33} \>kann nicht verwendet werden, bei exportierten Variablen!
+\end{tabbing}
+
+\subsection{Global Konstanten exportiert}
+\begin{tabbing}
+ \hspace{2mm} \= \hspace{50mm} \= \kill
+ \> \verb|const I = 33| \> deklariert I als Konstante mit 33, Go sucht sich den Typ aus. \\ 
+ \> \verb|const I int = 33 | \> deklariert i als Konstante in mit 33. \\
+\end{tabbing}
+
+\subsection{Lokal nicht-exportiert}
+Variablen mit kleinem Anfangsbuchstaben sind nicht exportiert. \\ 
+Das bedeutet das sie nur vom jeweiligen Paket verwendet werden können.
+\begin{center}
+  \begin{minipage}{1.0\textwidth}
+    \begin{lstlisting}[language=Go]
+    package main 
+
+    import {
+      "fmt"
+    }
+    
+    const a int = 13            // prio B
+
+    func main() {
+      const a int = 12          // prio A
+      fmt.Printf("%v\n", a)     // es wird 12 Ausgegeben
+    }
+
+    \end{lstlisting}
+  \end{minipage}
+\end{center}
+\begin{tabbing}
+ \hspace{2mm} \= \hspace{50mm} \= \kill
+ \> \verb|var i int = 33| \> deklariert die Variable i als int und weist 33 zu \\
+ \> \verb|i := 33| \> weist i den Wert 33 zu überlässt Deklartion dem  Compiler \\
+ \> \verb|var s string = "Hallo"| \> s ist string mit Hallo \\
+\end{tabbing}
+
+\subsection{Lokal Konstanten nicht-exportiert}
+Konstanten werden einmal definiert, können danach nicht mehr geändert werden. \\ 
+\textbf{Konstanten müssen bei der Compile-Time bekannt sein!}
+\begin{tabbing}
+ \hspace{2mm} \= \hspace{50mm} \= \kill
+ \> \verb|const i = 33| \> deklariter i als Konstante mit 33. Go sucht sich den Typ aus. \\ 
+ \> \verb|const i int = 33| \>deklariter i als Konstante int mit 33. \\ 
+\end{tabbing}
+
+\subsection{Pointer}
+\begin{center}
+  \begin{minipage}{1.0\textwidth}
+    \begin{lstlisting}[language=Go]
+    var p *int        // p ist der Pointer auf ein int  
+    var i int 
+    var k int
+    i := 42 
+    p = &i            // p zeigt nun auf den Variable i 
+                      // &i zeigt auf die Adresse von i
+    k = *p            // k hat den Wert auf den der Pointer zeigt
+                      // k hat nun also den Wert von i
+    \end{lstlisting}
+  \end{minipage}
+\end{center}
+
+\subsection{Array}
+Arrays haben meist eine feste Dimension, die nicht geändert wird.
+\begin{tabbing}
+ \hspace{2mm} \= \hspace{50mm} \= \kill
+ \> \textbf{Array mit 5 integer Werten} \\
+ \> \verb|var numbers [5]int| \\  
+ \> \verb|var fruits = [3]string{"Apfel", "Banane", "Kirsche"}| \\ 
+ \> \textbf{Kurzdeklarationen} \\ 
+ \> \verb|numbers := [5]int{1,2,3,4,5}|  \\ 
+ \> \textbf{leere Elemente werden mit 0 gefüllt} \\ 
+ \> \verb|numbers := [5]int{1,2,3}| \\ 
+ \> \textbf{Länge ist unbestimmt} \\ 
+ \> \verb|fruits := [...]string{"Apfel", "Banane"}| \\ 
+ \> \verb|firstFruit := fruits[0]| \> erstes Element \\ 
+ \> \verb|arr2 := arr1| \> Kopiert arr1 in arr2 \\ 
+ \> \verb|arr2[3] = 10| \> Element 3 erhält den Wert 10 \\ 
+ \> \textbf{Vergleicht direkt zwei Arrays gleicher Länge}  \\ 
+ \> \verb|if [3]int{1,2,3} == [3]int{1,2,3} { }| \\ 
+\end{tabbing}
+
+\subsection{Slices}
+Slices sind eine Art dynamische Arrays, sie sind flexibler und können während \\ 
+des Programmdurchlaufs wachsen und schrumpfen.  
+\begin{tabbing}
+ \hspace{2mm} \= \hspace{50mm} \= \kill
+ \> Ein Slice besteht aus drei Komponenten \\ 
+ \> Pointer \> Verweist auf das Element im "Array" \\ 
+ \> Länge (Length) \> Anzahl der Elemente \\ 
+ \> Kapazität (Capacity) \> max Anzahl der Elemente \\ 
+ \> \textbf{Erstellung eines Slice} \\
+ \> \verb|slice := []int{1, 2, 3, 4}| \\ 
+ \> \textbf{definiert Länge 5, Kapazität 10} \\ 
+ \> \verb|slice := make([]int, 5, 10)| \\ 
+ \> \textbf{schreibt das Array in ein Slice} \\
+ \> \verb|slice := arr[:]| \\ 
+ \> \textbf{Schreibt Elemente 1 bis 3 in eine Slice} \\ 
+ \> \verb|subSlice := slice[1:3]| \\ 
+ \> \textbf{fügt slice die Elemente 4 und 5 dazu} \\ 
+ \> \verb|slice = append(slice, 4, 5)| \\  
+ \> \textbf{gibt die Länge eines slice aus} \\ 
+ \> \verb|length := len(slice)| \\ 
+ \> \textbf{gibt die Kapazität eines slice aus} \\ 
+ \> \verb|capacity := cap(slice)| \\
+\end{tabbing}
+
+\subsection{Maps}
+Maps sind Arrays mit einem Label und einem Wert \\
+key-value-Speicher Schlüssel(Label) und Wert 
+\begin{tabbing}
+ \hspace{2mm} \= \hspace{50mm} \= \kill
+  \> leere Map mit string als Schlüssel und int als Value \\ 
+ \> \verb|m := make(map[string]int)| \\ 
+ \> \verb|m["age"] = 25| \> fügt ein key-value-Paar hinzu \\ 
+ \> \verb|age := m["age"]| \> lesen des Wertes mit dem Label age \\ 
+ \> \verb|delete(m, "age")| \> löscht das key-value-Paar \\ 
+ \> \verb|length = len(m)| \> gibt die Länge des Map aus \\ 
+\end{tabbing}
+\begin{center}
+  \begin{minipage}{1.0\textwidth}
+    \begin{lstlisting}[language=Go]
+    // zuweisen einer Map
+    scores := map[string]int{ 
+      "Alice": 100,
+      "Bob": 95,
+    }
+
+    // Pruefen ob ein Schluessel existiert
+    value, exists := m["age"]
+    if exists {
+      fmt.Println("Alter:", value)
+    } else {
+      fmt.Println("Schluessel nicht gefunden")
+    }
+
+    // Schleife ueber Map, um sie mit key-value-Paaren zu fuellen
+    for key, value := range scores {
+      fmt.Printf("Key: %s, Value: %d\n", key, value)
+    }
+
+    // Leere Map, nil Elemente sind eingefuegt
+    var m map[string]int   // Map wird mit nil geschrieben 
+    m["key"] = 42 // gibt eine Laufzeitpanik! Werte muessen mit make hinzugefuegt werden 
+    \end{lstlisting}
+  \end{minipage}
+\end{center}
+
+\subsection{Struct}
+Eine struct wird mit dem Schluesselwort type definiert, gefogt vom Namen der \\
+neuen Struktur und dem Schluesselwort struct, gefolgt von einer Liste \\ 
+Jede struct hat Felder, die aus einem Namen und einem Typ bestehen. \\ 
+Diese Felder sind ähnlich wie Variablen in einer Klasse.
+\begin{center}
+  \begin{minipage}{1.0\textwidth}
+    \begin{lstlisting}[language=go]
+    // Erstellen eines struct
+    type Person struct {
+      Name string 
+      Age int 
+      Email string 
+      Weight float 
+    }
+
+    // Fuellen eines struct 
+    var p Person 
+    p.Name = "Heinz"
+    p.Age = 30 
+    p.Email = "heinz@horst.org"
+    p.Weight = 90
+
+    // Kurzdeklaration 
+    p := Person(Name: "Heinz", Age: 30, Email: 
+         "heinz@horst.org", Weight: 90)
+
+    // Kurzdeklaration ohne Feldnamen {Reihenfolge wichtig}
+    p := Person("Tobi", 25, "heinz@horst.org", 90)
+    \end{lstlisting}
+  \end{minipage}
+\end{center}
+
+\subsection{Channels}
+Sind Kanäle die zwischen verschiedenen Goroutinen kommunizieren, auch Pipe genanne. 
+\begin{tabbing}
+ \hspace{2mm} \= \hspace{50mm} \= \kill
+ \> \textbf{ungepufferter Channel} \\
+ \> \verb| ch := make(chan int) | \> Kanal mit integer \\ 
+ \> \textbf{gepufferter Channel mit Kapazität von 10} \\
+ \> \verb| bufferedCh := make(chan string, 10) | \\
+ \> \verb| ch <- 42 | \> sendet 42 in den Kanal \\ 
+ \> \verb| value := <-ch | \> empfang eines Wertes aus dem Kanal \\ 
+ \> \verb| close(ch) | \> schließt den Kanal \\
+\end{tabbing}
+
+\subsection{Interfaces}
+Habe ich nocht verstanden, muss mich mehr einlesesn.
 
 \section{Mathematik}
-\subsection{Standard}
-\subsection{Exponential}
 \subsection{Vektor}
-\subsection{Trigonometrie}
+\begin{center}
+  \begin{minipage}{1.0\textwidth}
+   \begin{lstlisting}[language=Go]
+    // Ein 2D-Vektor
+    vector2D := []float64{1.0, 2.0}
+
+    // Ein 3D-Vektor
+    vector3D := []float64{1.0, 2.0, 3.0}
+   
+    // Struktur fuer Vektoren
+    type Vector2D struct {
+      X, Y float64
+    }
+
+    type Vector3D struct {
+      X, Y, Z float64
+    }
+
+    v2 := Vector2D{1.0, 2.0}
+    v3 := Vector3D{1.0, 2.0, 3.0}
+
+    // Addition und Subtraktion
+    func (v Vector2D) Add(w Vector2D) Vector2D {
+      return Vector2D{v.X + w.X, v.Y + w.Y}
+    }
+
+    func (v Vector2D) Sub(w Vector2D) Vector2D {
+      return Vector2D{v.X - w.X, v.Y - w.Y}
+    }
+
+    // Skalare Multiplikation
+    func (v Vector2D) Scale(scalar float64) Vector2D {
+      return Vector2D{v.X * scalar, v.Y * scalar}
+    }
+
+    // Betrag eines Vektor
+    func (v Vector2D) Length() float64 {
+      return math.Sqrt(v.X*v.X + v.Y*v.Y)
+    }
+
+    // Dot Product
+    func (v Vector2D) Dot(w Vector2D) float64 {
+      return v.X*w.X + v.Y*w.Y
+    }
+   \end{lstlisting} 
+  \end{minipage}
+  
+\end{center}
+
+\subsection{Komplexe Zahlen}
+\begin{center}
+  \begin{minipage}{1.0\textwidth}
+    \begin{lstlisting}[language=Go]
+    var a complex64 = 3 + 2i     // (float32) + (float32)i
+    var B complex(5.0, 6.0)      // compleax128 5 + 6i
+    fmt.Printf("Realteil von a: %f\n", real(a)) // Ausgabe 
+                                                // des Realteil
+    var imagB = imag(B)          // Speichert Imaginaerteil 
+                                 // in imagB
+
+    c := 3 + 4i
+    fmt.Println(cmplx.Abs(c))    // Betrag des komplexen 
+                                 // Zahlenvektors
+    fmt.Println(cmplx.Phase(c))  // Phase der komplexen Zahl in 
+                                 // Radianten
+    fmt.Println(cmplx.Conj(c))   // Konjugierte der komplexen 
+                                 // Zahl
+	  \end{lstlisting}
+  \end{minipage}
+\end{center}
 
 \section{Datenmanagement}
 \subsection{Speichern}
-\subsection{Laden}
-\subsection{Einlesen}
-\subsection{Parsen}
+\verb| os.WriteFile(name string, data []byte, perm os.FileMode) | \\ 
+Schreibt Daten in eine Datei mit Zugriffsrechten, ueberschreibt wenn die Datei \\ 
+existiert oder erstellt sie neu. \\ 
+\verb| bufio.NewWriter(w io.Writer) | \\ 
+Erstellt einen neuen Writer \\ 
+\verb| WriteString(s string) | \\ 
+Schreibt einen String in einen Puffer \\ 
+\verb| Flush() | \\ 
+überschreibt alle gepufferte Daten \\ 
+\verb| binary.Write(w io.Writer, order binary.ByteOrder, data interface{}) | \\ 
+Schreibt in binärer Form \\ 
+\verb| json.MarshalIndet(V interface{}, prefix, indent string) | \\ 
+Wandelt eine Go-struct in JSON um \\ 
+\verb| csv.NewWriter(w io.Writer) | \\ 
+Erstellt einen neuen CSV-Writer \\ 
+\verb| Write(record []string) | \\ 
+Schreibt eine Zeile in eine CSV-Datei \\ 
+\verb| sql.Open(driverName, dataSourceName string) | \\ 
+Öffnet eine Verbindung zu eine SQLite Datenbank \\ 
+\verb| db.Exec(query string, args ...interface{}) | \\ 
+Führt ein SQL-Statement aus \\ 
 
-\section{Speichermanagement}
-
+\subsection{Laden und Einlesen}
+\verb| os.Open(name string) | \\ 
+Öffnet eine Datei zum lesesn und gibt eine Pointer zurück \\ 
+\verb| file.Close() | \\ 
+Schließt die Datei \\ 
+\verb| ioutil.ReadFile(filename string) | \\ 
+Liest den fesamten Inhalt einer Datei ein \\
+\verb| bufio.NewScanner(r io.Reader) | \\ 
+Erstellt einen Scanner der Zeilenweise einliest \\ 
+\verb| scanner.Scan() | \\ 
+Liest die nächste Zeile eine, gibt true zurück wenn gelesen wurde \\ 
+\verb| scanner.Text() | \\ 
+Gibt die zuletzt gelesene Zeile als string zurück \\ 
+\verb| scanner.Err() | \\ 
+Gibt den ersten aufgetretenen Fehler zurück \\ 
+\verb| binary.Read(r io.Reader, order binary.ByteOrder, data interface{}) | \\ 
+Liest binäre Daten ein und speichert sie in data \\ 
+\verb| json.NewDecoder(r io.Reader) | \\ 
+Erstellt einen neuen JSON-Decoder \\ 
+\verb| csv.NewReader(r io.Reader) | \\ 
+Erstellt einen neune CSV-Reader \\ 
+\verb| reader.ReadAll() | \\ 
+Liest alle Zeilen der CSV-Datei ein \\ 
+\verb| sql.Open(driverName, dataSourceName string) | \\ 
+Öffnet eine SQL Datenbankverbindung \\
 \section{Fehlermanagement}
 \subsection{Exception}
 \subsection{Error}
@@ -292,15 +746,312 @@ z.B. hochzählen des Zählers \\
 \section{Regeln}
 
 \section{Multiprozess}
+Goroutinen sind "leichtgewichtige Threads", die von der Go-Runtime verwaltet werden. \\ 
+Sie ermöglichen es, nebenläufige Aufgaben in einem Programm zu starten, ohne Komplexität \\ 
+oder den Overhead. Es gibt auch ein paar runtime Funktionen für Go-Routine \ref{sec:runtime} \\ 
+
+\subsection{starten}
+\begin{center}
+  \begin{minipage}{1.0\textwidth}
+    \begin{lstlisting}[language=Go]
+    go functionName(arguments)    // go startet eine Go-Routine 
+    \end{lstlisting}
+  \end{minipage}
+\end{center}
+
+\subsection{time.sleep}
+Verzögerung, kann verwendet werden um Go-Routinen an zu halten. \\ 
+Und später wieder zu starten.
+\begin{tabbing}
+ \hspace{2mm} \= \hspace{50mm} \= \kill
+ \> "time" \> Paket wird benoetigt \\
+ \> \verb|time.Sleep(duration Duration)| \\ 
+ \> \> duration gibt den Wert an \\ 
+ \> \> Duration kann folgende Werte haben: \\ 
+ \> \> time.Second, time.Millisecond, \\ 
+ \> \> time.Microsecond, time.Nanosecond \\ 
+\end{tabbing}
+
+\subsection{panic und recover}
+Zwei Mechanismen die speziell für Fehlerbehandlung und Umgang mit Ausnahmefällen in \\ 
+Goroutinen kozeptiert sind. 
+\textbf{panic} dieses Funktion beendet eine Goroutine sofort und löst eine Panik aus. \\ 
+Panik kann im Programm ausgelöst werden oder von Go selbst. \\ 
+Laufzeitfehler, Division durch Null, nil-Pointer... \\ 
+\textbf{recover} diese Funktion kann nur während einer defer-Anweisung funktionieren. \\ 
+Recover gibt den Wert der Panik zurück oder nil wenn es keine Panik gibt.
+\begin{center} 
+  \begin{minipage}{1.0\textwidth}
+    \begin{lstlisting}[language=Go]
+     package main
+
+		 import (
+		     "fmt"
+		     "time"
+		 )
+		 
+		 func mayPanic() {
+		     panic("ein Panik in einer Goroutine")
+		 }
+		 
+		 func main() {
+		     go func() {
+		         defer func() {
+		             if r := recover(); r != nil {
+		                 fmt.Println("Recovered in Goroutine:", r)
+		             }
+		         }()
+		         mayPanic()
+		     }()
+		 
+		     time.Sleep(1 * time.Second) // Gibt der Goroutine Zeit, 
+                                     // sich zu erholen
+		     fmt.Println("Programm laeuft weiter")
+		 } 
+    \end{lstlisting}
+  \end{minipage}
+\end{center}
+
+\subsection{worker}
+\textbf{workder} diese Funktion ist ein Ansatz, um Aufgaben in parallelen oder \\
+asynchronen Umgebungen zu Verarbeiten. \\
+\begin{center}
+  \begin{minipage}{1.0\textwidth}
+    \begin{lstlisting}[language=Go]
+		func worker(id int, jobs <-chan int, results chan<- int) {
+		    for j := range jobs {
+		        // Arbeit ausfuehren
+		        fmt.Printf("Worker %d verarbeitet Job %d\n", id, j)
+		        result := processJob(j) // Annahme einer Hilfsfunktion
+		        results <- result // Ergebnis senden
+		    }
+		}
+    \end{lstlisting}
+  \end{minipage}
+\end{center}
+\textbf{id} Identifikator für den Worker \\ 
+\textbf{jobs} empfangen von Aufgaben \\ 
+\textbf{results} senden von Aufgaben \\ 
 
 \section{Bibliotheken}
+\href{https://pkg.go.dev/std}{std bib link}
+\label{link:pkg}
+
 \subsection{fmt}
+\begin{tabbing}
+ \hspace{2mm} \= \hspace{50mm} \= \kill
+ \> \verb| fmt.Println() | \> Ausgabe mit Zeilenumbruch \\ 
+ \> \verb| fmt.Printf() | \> Formatierte Ausgabe \\
+ \> \verb| fmt.Fprintf() | \> kann in eine Datei schreiben \\ 
+ \> \verb| fmt.Print() | \> Ausgabe \\ 
+ \> \verb| fmt.Scan() | \> Liest eine Eingabe ein \\ 
+ \> \verb| fmt.Scnaf() | \> liest bestimmtes Format ein \\ 
+ \> \verb| fmt.Scanln() | \> liest bis zum Zeilenumbruch \\ 
+ \> \verb| fmt.Errorf() | \> formatierte Fehlermeldung \\ 
+ \> \verb| fmt.Sprintf() | \> Rueckgabe einer formatierte Zeichenkette \\ 
+ \> \verb| fmt.Sprintln() | \> formatierte Zeichenkette ohen Ausgabe \\ 
+ \> \verb| fmt.Sscanf() | \> Parst eine Zeichenkette \\ 
+\end{tabbing}
 
 \subsection{os}
+\begin{tabbing}
+ \hspace{2mm} \= \hspace{50mm} \= \kill
+ \> \verb| os.Open(name string) | \\ 
+ \> Oeffnet eine Datei \\ 
+ \> \verb| os.Create(name string) | \\ 
+ \> erstellt eine Datei, oder ueberschreibt \\ 
+ \> \verb| os.Remove(name string) |  \\
+ \> Loescht die Datei oder Verzeichnis \\
+ \> \verb| os.Rename(oldpath, newpath string) | \\ 
+ \> Umbenennen \\ 
+ \> \verb| os.Mkdir(name string, perm FileMode) | \\ 
+ \> erstellt ein Verzeichnis, mit Zugriffsrechten \\
+ \> \verb| os.MkdirAll(path string, perm FileMode) |  \\ 
+ \> erstellt ein Verzeichnis, mit allen Unterordnern \\ 
+ \> \verb| os.RemoveAll(path string) | \\ 
+ \> Loescht das Verzeichnis, mit allen Unterordnern \\
+ \> \verb| os.Stat(name string) | \\ 
+ \> gibt Informationen ueber eine Datei zurueck \\ 
+ \> \verb| os.Lstat(name string) | \\ 
+ \> wie os.Stat, folgt keinem symbolischen Link \\ 
+ \> \verb| os.Chmod(name string, mode FileMode) | \\ 
+ \> aendert Zugriffsrechten \\
+ \> \verb| os.Exit(code int) | \\ 
+ \> Beendet Programm mit angegebenen Ausgangscode \\ 
+ \> \verb| os.Exec(argv0 string, argv []stirng, envv []string) | \\ 
+ \> \> Ersetzt das aktuelle Programm durch ein neues \\ 
+ \> \verb| os.StartProcess(name string, argv []string, envv []string) | \\ 
+ \> \> startet einen neuen Prozess \\ 
+ \> \verb| os.Getenv(key string) | \\ 
+ \> Wert der Umgebungsvariablen \\ 
+ \> \verb| os.Setenv(key, value string) | \\ 
+ \> setzt eine Umgebungsvariablen \\ 
+ \> \verb| os.Environ() | \\ 
+ \> gibt alle Umgebungsvariablen zurueck \\ 
+ \> \verb| os.Hostname() | \\ 
+ \> Hostname des Rechners \\ 
+ \> \verb| os.Stdin() | \\ 
+ \> Stream einer Eingabe \\ 
+ \> \verb| os.Stdout() | \\ 
+ \> Stream einer Ausgabe \\ 
+ \> \verb| os.Stderr() | \\ 
+ \> Stream einer Fehlermeldung \\ 
+ \> \textbf{os.FileMode} \\
+ \> $0400$ \> Leserechte Besitzer \\ 
+ \> $0040$ \> Leserechte Gruppen \\
+ \> $0004$ \> Leserecht fuer Alle \\
+ \> $0200$ \> Schreibrechte Besitzer \\ 
+ \> $0020$ \> Schreiberechte Gruppe \\
+ \> $0002$ \> SChreibrechte fuer Alle \\ 
+ \> $0100$ \> Ausfuehrrechte Besitzer \\ 
+ \> $0010$ \> Ausfuehrrechte Gruppe \\ 
+ \> $0001$ \> Ausfuehrrechte fuer Alle \\
+ \> $0644$ \> lesen, schreiben fuer Besitzer, lesesn fuer den Rest \\ 
+ \> $0777$ \> lesen, schreiben und ausfuehren fuer Alle \\
+ \> \verb| os.ModeDir | \> gibt an das es ein Verzeichnis ist \\ 
+ \> \verb| os.ModeAppend | \> wird nur im Anhang geoeffnet \\ 
+ \> \verb| os.ModeExclusive | \> Datei wird exklusiv geoeffnet \\ 
+ \> \verb| os.ModeTemporary | \> Datei ist temporaer \\ 
+ \> \verb| os.ModeSymlink | \> symbolischer Link \\ 
+ \> \verb| os.ModeDevice | \> Datei ist ein Geraet \\ 
+ \> \verb| os.ModeNamedPipe | \> Datei ist ein Pipe \\ 
+ \> \verb| os.ModeSocket | \> Datei ist ein Socket \\ 
+ \> \verb| os.ModeSetuid | \> Set-UID Bit \\ 
+ \> \verb| os.ModeSetgid | \> Set-GID Bit \\ 
+ \end{tabbing}
 
 \subsection{bufio}
+\begin{tabbing}
+ \hspace{2mm} \= \hspace{50mm} \= \kill
+ \> \textbf{bufio.Reader} \\ 
+ \> \verb|bufio.NewReader(rd io.Reader)| \\ 
+ \> erstellt einen Reader \\
+ \> \verb|bufio.NewReaderSize(rd io.Reader, size int)| \\ 
+ \> erstellt einen Reader mit Puffer \\ 
+ \> \verb|ReadString(delim byte) (string, error)| \\ 
+ \> liest bis zum Delimiter ein und gibt einen String zurück \\  
+ \> \verb|ReadLine() (line []byte, isPrefix bool, err error)| \\ 
+ \> liest eine Zeile ein ohne Zeilenumbruch \\
+ \> \verb|ReadSlice(delim byte) (line []byte, err error)| \\ 
+ \> liest bis zum Delimiter ein und gibt einen Slice zurück \\ 
+ \> \verb|ReadBytes(delim byte) ([]byte, error)| \\ 
+ \> liest bis zum Delimiter ein und gibt einen Byte-Slice zurück \\ 
+ \> \verb|Peek(n int) ([]byte, error)| \\ 
+ \> gibt die nächsten n Bytes im Puffer zurück \\ 
+ \> \textbf{bufio.Writer} \\ 
+ \> \verb|bufio.NewWriter(w io.Writer)| \\ 
+ \> erstellt einen Writer \\ 
+ \> \verb|bufio.NewWriterSize(w io.Writer, size int)| \\ 
+ \> erstellt einen Writer mit Puffer \\ 
+ \> \verb|WriteString(s string) (int, error)| \\ 
+ \> schreibt String in den Puffer \\ 
+ \> \verb|WriteByte(c byte) error| \\ 
+ \> schreibt ein Byte in den Puffer \\ 
+ \> \verb|Write(p []byte) (int, error)| \\ 
+ \> schreibt einen Byte-Slice in den Puffer \\ 
+ \> \verb|Flush() error| \\ 
+ \> überschreibt alle gepufferten Daten \\ 
+ \> \verb|Available() int| \\ 
+ \> gibt die Anzahl der freien Bytes im Puffer zurück \\ 
+ \> \textbf{bufio.Scanner} \\ 
+ \> \verb|bufio.NewScanner(r io.Reader)| \\ 
+ \> erstellt einen neuen Scanner \\ 
+ \> \verb|Scan() bool| \\ 
+ \> gibt zurück, ob eine Zeile gelesen wurde \\ 
+ \> \verb|Text() string| \\ 
+ \> gibt letzte gelesene Zeile als String zurück \\ 
+ \> \verb|Err() error| \\ 
+ \> gibt den ersten aufgetretenen Fehler zurück \\ 
+ \> \verb|Split(split bufio.SplitFunc)| \\ 
+ \> setzt eine Funktion, die definiert, wie der Scanner seine Eingabe aufteilt \\ 
+\end{tabbing}
 
-\section{Ausführen}
+\subsection{math}
+\label{sec:math}
+\begin{tabbing}
+ \hspace{2mm} \= \hspace{50mm} \= \kill
+ \> Auszug aus math \>  sieh \ref{link:pkg} \\
+ \> float64 \> alle Variablen sind float64 \\
+ \> \\
+ \> \textbf{Konstanten} \\ 
+ \> math.Pi \> Wert von Pi \\ 
+ \> math.E \> natrürlicher Logarithmus ln(e) euler \\ 
+ \> \\ 
+ \> \textbf{Absolutwert} \\
+ \> math.Abs(x)\> absolutwert von x \\ 
+ \> \\
+ \> \textbf{Potenzierung} \\ 
+ \> math.Pow(10, -3)\> gibt nur die Potenz an, \verb|10^-3| \\
+ \> \\
+ \> \textbf{Exponent} \\ 
+ \> math.Exp(x)  \> Berechnet \verb|a^x| \\ 
+ \> math.Exp2(x)\> Berechnet \verb|2^x| \\
+ \> \\
+ \> \textbf{Wurzel} \\ 
+ \> math.Sqrt(x)\> Quadratwurzel von x \\ 
+ \> math.Cbrt(x)\> Kubikwurzel von x \\
+ \> \\
+ \> \textbf{Runden} \\
+ \> math.Round(x)\> Rundet x \\ 
+ \> math.RoundToEven(x)\> Rundet auf gerade Ganzzahl \\ 
+ \> \\
+ \> \textbf{Abschneiden} \\ 
+ \> math.Floor(x)\> gößte Ganzzahl, die kleiner oder gleich x ist \\ 
+ \> math.Ceil(x)\> kleinste Ganzzahl, die größer oder gleich x ist \\ 
+ \> math. Trunc(x)\> Kürzt Nachkommastellen und rundet gegen 0 \\ 
+ \> \\
+ \> \textbf{Min/Max} \\ 
+ \> math.Max(x, y)\> gibt größer Zahl von x und y zurück \\ 
+ \> math.Min(x, y)\> gibt kleinere Zahl von x und y zurück \\ 
+ \> \\
+ \> \textbf{Modulo} \\ 
+ \> math.Mod(x, y)\> gibt Rest von x durch y zurück \\ 
+ \> \\
+ \> \textbf{Hypotenuse} \\ 
+ \> math.Hypot(x, y)\> Länge des Vektors(x,y) \\ 
+ \> \\
+ \> \textbf{Triggonometrie} \\ 
+ \> math.Sin(x)\> Sinus(x) \\ 
+ \> math.Cos(x)\> Cosinus(x) \\ 
+ \> math.Tan(x)\> Tangens(x) \\
+ \> math.Asin(x)\> Arkussinus(x) \\ 
+ \> math.Acos(x)\> Arkuskosinus(x) \\ 
+ \> math.Atan(x)\> Arkustangens(x) \\
+ \> math.Atan2(y, x)\> Berechnet den Winkel zwischen, positiv X-Achse \\ 
+ \> \> und Punkt(x, y) in Raianten \\
+ \> \\
+ \> \textbf{Logarithmus} \\ 
+ \> math.Log(x)\> natrürlicher Logarithmus \\
+ \> mat.Log10(x)\> Logarithmus zur Bais 10 \\ 
+ \> math.Log2(x)\> Logarithmus zur Basis 2 \\ 
+ \> math.Logb(x)\> Logarithmus mit binärer Basis \\ 
+\end{tabbing}
+
+\subsection{runtime}
+Befehle für Go-Routine \label{sec:runtime}
+\begin{tabbing}
+ \hspace{2mm} \= \hspace{70mm} \= \kill
+ \> \verb| runtime.NumGoroutine() | \> Anzahl der existierende Go-Routinen \\ 
+ \> \verb| runtime.Gosched() | \> gibt die CPU frei für andere Go-Routine \\ 
+ \> \verb| runtime.Goexit() | \> Beendet die Go-Routine ohne defer-Funktion \\ 
+ \> \verb| runtime.GOMAXPROCS(n int) | \> kann die Anzahlen von Go-Routinen \\
+ \> \> an zu geben. wird seit Go 1.5 nicht mehr benoetigt\\ 
+ \> \verb| runtime.GC() | \> startet die Garbage Collection. \\ 
+ \> \> Laeuft normalerweise ohne auf zu rufen. \\ 
+ \> \verb| runtime.ReadMemStats(m *MemStats) | \\ 
+ \> \> uebergibt MemStats Struktur \\ 
+ \> \> ueber Speicherauslastung und Garbage Collection. \\ 
+ \> \verb| runtime.SetBlockProfileRate(rate int) | \\ 
+ \> \verb| runtime.SetMutexProfileFraction(rate int) | \\ 
+ \> \verb| runtime.Stack(buf []byte, all bool) | \\ 
+ \> \verb| runtime.LockOSThread() | \> bindet die Go-Routine an den OS-Thread \\
+ \> \verb| runtime.UnlockOSThread() | \> hebt die Bindung wieder wieder \\ 
+ \> \verb| runtime.Breakpoint() | \> setzt einen Unterbrechungspunkt \\ 
+ \> \verb| runtime.KeepAlive(x interface{}) | \> deaktiviert den Garbage Collector \\ 
+ \> \> damit bestimmte Daten weiterhin verfügbar bleiben \\
+\end{tabbing}
+
+ \section{Ausführen}
 \subsection{Kompilieren/Ausführen}
 \begin{tabbing}
   \hspace{2mm} \= \hspace{50mm} \= \kill
@@ -380,60 +1131,4 @@ z.B. hochzählen des Zählers \\
 \end{itemize}
 
 \end{document}
-
-%# ==========  
-%# ==========  
-%# ==========  
-%# ==========  
-%# ==========  
-\subsection{tabbing}
-\begin{tabbing}
-  \hspace{2mm} \= \hspace{50mm} \= \kill
-  
-\end{tabbing}
-
-\subsection{Durchgestrichene Zeile}
-Dies ist eine \sout{durchgestrichene} Zeile.
-
-\subsection{Links}
-Hier ist ein \href{https://github.com}{Link zu GitHub}.
-
-\begin{center}
-  \begin{minipage}{0.9\textwidth}
-    \begin{lstlisting}[language=Go]
-    package main
-
-    import "fmt"
-
-    func main() {
-      fmt.Println("Hallo, Welt!")
-    }
-    \end{lstlisting}
-  \end{minipage}
-\end{center}
-
-\subsection{Bilder}
-%\begin{figure}[h]
-%    \centering
-%    \includegraphics[width=0.5\textwidth]{deinbild} % Ersetze "deinbild" durch den Namen deiner Bilddatei
-%    \caption{Ein Beispielbild}
-%    \label{fig:beispielbild}
-%\end{figure}
-
-\subsection{Tabellen}
-\begin{table}[h]
-    \centering
-    \begin{tabular}{|c|c|c|}
-        \hline
-        A & B & C \\
-        \hline
-        1 & 2 & 3 \\
-        \hline
-        4 & 5 & 6 \\
-        \hline
-    \end{tabular}
-    \caption{Eine Beispiel-Tabelle}
-    \label{tab:beispieltabelle}
-\end{table}
-
 
