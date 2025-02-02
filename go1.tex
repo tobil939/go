@@ -106,6 +106,97 @@ Exportierte Variablen sind dann auch in diesem Paket verwendbar.
   \end{minipage}
 \end{center}
 
+\newpage
+\section{Funktionen}
+\subsection{Allgemein} 
+\textbf{Parameter} Funktionen können Parameter, müssen aber nicht \\ 
+\textbf{Rückgabetyp} Funktionen können Rückgabewerte haben, müssen aber nicht \\
+\begin{center}
+  \begin{minipage}{1.0\textwidth} 
+    \begin{lstlisting}[language=Go]
+     func functionName(parameter1 type, parameter2 type) returnType {
+       // Funktionskoerper
+     }
+    \end{lstlisting}
+  \end{minipage}
+\end{center}
+
+\subsection{Anonyme Funktion}
+Eine Funktion, die ohne Namen deklariert wird, ist eine anonyme Funktion. \\ 
+Diese können sofort aufgerufen oder als Wert benuzt werden.
+\begin{center}
+  \begin{minipage}{1.0\textwidth}
+    \begin{lstlisting}[language=Go]
+		 func() {
+        fmt.Println("Anonyme Funktion")
+     }()
+
+     // Oder als Wert gespeichert:
+     f := func() {
+       fmt.Println("Anonyme Funktion als Wert")
+     }
+     f()
+
+     // Closures von Anonyme Funktionen
+     func makeCounter() func() int {
+       count := 0
+       return func() int {
+         count++
+         return count
+       }
+     }
+     counter := makeCounter()
+     fmt.Println(counter()) // Ausgabe: 1
+     fmt.Println(counter()) // Ausgabe: 2
+    \end{lstlisting}
+  \end{minipage}
+\end{center}  
+
+\newpage
+\subsection{defer}
+defer-Funktion sind mächtige Kostrukte, die es ermöglichen das Ausführen \\ 
+von Anweisungen bis zum Ende der umgebenden Funktion zu verzögern. \\
+\textbf{Fehlerbehandlung}
+Kann verwendet werden, um Fehler zu protokollieren oder aufzuräumen, \\ 
+bevor die Funktion zurückkehrt.
+\begin{center}
+  \begin{minipage}{1.0\textwidth}
+    \begin{lstlisting}[language=Go]
+		 func process(data []byte) error {
+		     defer func() {
+		         if r := recover(); r != nil {
+		             log.Printf("Recovered from panic: %v", r)
+		         }
+		     }()
+		     // ... potenziell panische Operationen ...
+    return nil
+    \end{lstlisting}
+  \end{minipage}
+\end{center}
+\textbf{Parameterbindung}
+Die Argumente einer defer-Funktion werden zum Zeitpunkt der defer-Deklaration \\ 
+ausgewertet, nicht zum Zeitpunkt der Ausführen. Das ist besonders nützlich für \\ 
+das Erfassen von Zuständen.
+\begin{center}
+  \begin{minipage}{1.0\textwidth}
+    \begin{lstlisting}[language=Go]
+ 		 func trace(s string) func() {
+       fmt.Println("Eintritt:", s)
+       return func() {
+         fmt.Println("Ausgang:", s)
+       }
+     }
+ 
+     func main() {
+       defer trace("main")() // "Eintritt: main" wird sofort ausgegeben, "Ausgang: main" am Ende
+       // ... irgendein Code ...
+     }
+    return nil
+    \end{lstlisting}
+  \end{minipage}
+\end{center}
+
+\newpage
 \section{Interaktion}
 \subsection{Eingabe}
 \begin{tabbing}
@@ -118,6 +209,7 @@ Exportierte Variablen sind dann auch in diesem Paket verwendbar.
   \> \verb| bufio.Reader | \> größere Eingaben oder Zeilenweise \\ 
   \> \verb| bufio.Scanner | \>  Scant Tokens in Text oder Eingabe \\
 \end{tabbing}
+
 \subsection{Ausgabe}
 \begin{tabbing}
   \hspace{2mm} \= \hspace{70mm} \= \kill
@@ -129,6 +221,7 @@ Exportierte Variablen sind dann auch in diesem Paket verwendbar.
   \> \verb| os.Stdout | \> schreibt in eine Datei \\ 
   \> \verb| os.Stderr | \> schreibt eine Fehlermeldung in eine Datei \\ 
 \end{tabbing}
+
 \subsection{fmt Steuerzeichen}
 \begin{tabbing}
   \hspace{2mm} \= \hspace{70mm} \= \kill
@@ -137,6 +230,7 @@ Exportierte Variablen sind dann auch in diesem Paket verwendbar.
   \> \verb| \\ | \> Backslash \\ 
   \> \verb| \" | \> Anführungszeichen \\ 
 \end{tabbing}
+
 \subsection{Formatierungen fmt.Printf()}
 \begin{tabbing}
  \hspace{2mm} \= \hspace{30mm} \= \kill
@@ -265,7 +359,7 @@ Die in der Schleife verwendet werden, wird nur am Anfang der Schleife gemacht \\
 \textbf{Bedingung:} wird vor jeder Iteration ausgewertet, bei true wird \\ 
 der Inhalt der Schleife ausgeführt \\ 
 \textbf{Nachbearbeitung:} wird am Ende jeder Iteration gemacht, \\ 
-z.B. hochzählen des Zählers \\ 
+z.B. hochzählen des Zählers  
 
 \subsection{for mit break}
 \begin{center}
@@ -347,6 +441,7 @@ z.B. hochzählen des Zählers \\
  \> \verb| /= | \> Division mit Zuweisung, \verb|a /= 3| $\rightarrow$ \verb|a = a / 3| \\ 
  \> \verb| %= | \> Modulo mit Zuweisung, \verb|a %= 3| $\rightarrow$ \verb|a = a \% 3| \\
 \end{tabbing}
+
 \subsection{Logisch}
 \begin{tabbing}
  \hspace{2mm} \= \hspace{30mm} \= \kill
@@ -355,6 +450,7 @@ z.B. hochzählen des Zählers \\
   \> \verb| !a | \> nicht a \\
   \> \verb| ^ | \> xor \\
 \end{tabbing}
+
 \subsection{bitweise Operatoren}
 \begin{tabbing}
  \hspace{2mm} \= \hspace{30mm} \= \kill
@@ -392,6 +488,7 @@ z.B. hochzählen des Zählers \\
  \> struct \> Benutzerdefinierte Struktur \\ 
  \> pointer \> zeigt Adresse einer Variable \\
  \end{tabbing}
+
 \subsection{Umwandeln von var und const}
 \begin{center}
   \begin{minipage}{1.0\textwidth}
@@ -428,6 +525,7 @@ und können von anderern Paketen verwendet werden. \\
  \> \verb|const I int = 33 | \> deklariert i als Konstante in mit 33. \\
 \end{tabbing}
 
+\newpage
 \subsection{Lokal nicht-exportiert}
 Variablen mit kleinem Anfangsbuchstaben sind nicht exportiert. \\ 
 Das bedeutet das sie nur vom jeweiligen Paket verwendet werden können.
@@ -527,6 +625,7 @@ des Programmdurchlaufs wachsen und schrumpfen.
  \> \verb|capacity := cap(slice)| \\
 \end{tabbing}
 
+\newpage
 \subsection{Maps}
 Maps sind Arrays mit einem Label und einem Wert \\
 key-value-Speicher Schlüssel(Label) und Wert 
@@ -568,6 +667,7 @@ key-value-Speicher Schlüssel(Label) und Wert
   \end{minipage}
 \end{center}
 
+\newpage
 \subsection{Struct}
 Eine struct wird mit dem Schluesselwort type definiert, gefogt vom Namen der \\
 neuen Struktur und dem Schluesselwort struct, gefolgt von einer Liste \\ 
@@ -614,8 +714,56 @@ Sind Kanäle die zwischen verschiedenen Goroutinen kommunizieren, auch Pipe gena
  \> \verb| close(ch) | \> schließt den Kanal \\
 \end{tabbing}
 
+\newpage
 \subsection{Interfaces}
-Habe ich nocht verstanden, muss mich mehr einlesesn.
+Ein Interface in Go ist ein Typ, der eine Reihe von Methoden definiert, die implementiert \\ 
+werden müssen. Es ist ähnlich zu abstrakten Klassen in anderen Programmiersprachen.
+\begin{center}
+  \begin{minipage}{1.0\textwidth}
+    \begin{lstlisting}[language=Go]
+     type Greeter interface {       // Definition
+      Greet() string
+     }
+
+     type Person struct {           // Implementierung
+        Name string
+     }
+     func (p Person) Greet() string {
+        return "Hallo, " + p.Name
+     }
+
+     func SayHello(g Greeter) {     // Polymorphismus
+        fmt.Println(g.Greet())
+     }
+     func main() {
+        p := Person{Name: "Tobi"}
+        SayHello(p)  // Ausgabe: Hallo, Tobi
+     }
+
+     var any interface{}          // Leeres Interface
+     any = 42
+     any = "Hello"
+
+		 type Counter int             // Methodenmengen
+		 func (c *Counter) Increment() {
+		     *c++
+		 }
+		 type Incrementer interface {
+		     Increment()
+		 }
+		 var c Counter
+		 var inc Incrementer = &c // Nur ein Pointer auf Counter implementiert Incrementer
+
+		 type Shape interface {     // Embedded Interface
+		     Area() float64
+		 }
+		 type ColoredShape interface {
+		     Shape
+		     Color() string
+		 }
+    \end{lstlisting}
+  \end{minipage}
+\end{center}
 
 \section{Mathematik}
 \subsection{Vektor}
@@ -739,9 +887,89 @@ Erstellt einen neune CSV-Reader \\
 Liest alle Zeilen der CSV-Datei ein \\ 
 \verb| sql.Open(driverName, dataSourceName string) | \\ 
 Öffnet eine SQL Datenbankverbindung \\
+
 \section{Fehlermanagement}
-\subsection{Exception}
 \subsection{Error}
+\textbf{Fehlerprüfung}
+\begin{center}
+  \begin{minipage}{1.0\textwidth}
+    \begin{lstlisting}[language=Go]
+     result, err := doSomething()
+     if err != nil {
+       // Fehlerbehandlung, z.B.:
+       log.Println("Ein Fehler ist aufgetreten:", err)
+       return // oder weitergeben, oder spezielles Handling
+     }
+     // Wenn kein Fehler aufgetreten ist, weiterarbeiten mit result
+    \end{lstlisting}
+  \end{minipage}
+\end{center}
+
+\newpage
+\textbf{Fehler ignorieren}
+\begin{center}
+  \begin{minipage}{1.0\textwidth}
+    \begin{lstlisting}[language=Go]
+     _, err := doSomething()
+     if err != nil {
+       log.Println("Warnung:", err) // Optional: Loggen, aber nicht abbrechen
+     }
+     // Weiter mit der Ausfuehrung    
+    \end{lstlisting}
+  \end{minipage}
+\end{center}
+
+\textbf{Fehler weitergerben}
+\begin{center}
+  \begin{minipage}{1.0\textwidth}
+    \begin{lstlisting}[language=Go]
+     func wrapper() error {
+       if err := doSomething(); err != nil {
+         return err // Fehler weitergeben
+       }
+       return nil
+     }
+    \end{lstlisting}
+  \end{minipage}
+\end{center}
+
+\textbf{Fehlerverpackung}
+\begin{center}
+  \begin{minipage}{1.0\textwidth}
+    \begin{lstlisting}[language=Go]
+     if err != nil {
+       return fmt.Errorf("Fehler beim Verarbeiten: %w", err)
+     }
+    \end{lstlisting}
+  \end{minipage}
+\end{center}
+
+\textbf{Fehlerkette}
+\begin{center}
+  \begin{minipage}{1.0\textwidth}
+    \begin{lstlisting}[language=Go]
+     if errors.Is(err, os.ErrNotExist) {
+       fmt.Println("Die Datei existiert nicht")
+     }
+    \end{lstlisting}
+  \end{minipage}
+\end{center}
+
+\textbf{Panic und Recover}
+\begin{center}
+  \begin{minipage}{1.0\textwidth}
+    \begin{lstlisting}[language=Go]
+     func main() {
+      defer func() {
+        if r := recover(); r != nil {
+            fmt.Println("Recovered from panic:", r)
+        }
+      }()
+      panic("Ein schwerwiegender Fehler")
+     }
+    \end{lstlisting}
+  \end{minipage}
+\end{center}
 
 \section{Regeln}
 
@@ -749,7 +977,6 @@ Liest alle Zeilen der CSV-Datei ein \\
 Goroutinen sind "leichtgewichtige Threads", die von der Go-Runtime verwaltet werden. \\ 
 Sie ermöglichen es, nebenläufige Aufgaben in einem Programm zu starten, ohne Komplexität \\ 
 oder den Overhead. Es gibt auch ein paar runtime Funktionen für Go-Routine \ref{sec:runtime} \\ 
-
 \subsection{starten}
 \begin{center}
   \begin{minipage}{1.0\textwidth}
@@ -766,15 +993,14 @@ Und später wieder zu starten.
  \hspace{2mm} \= \hspace{50mm} \= \kill
  \> "time" \> Paket wird benoetigt \\
  \> \verb|time.Sleep(duration Duration)| \\ 
- \> \> duration gibt den Wert an \\ 
- \> \> Duration kann folgende Werte haben: \\ 
- \> \> time.Second, time.Millisecond, \\ 
- \> \> time.Microsecond, time.Nanosecond \\ 
+ \> duration gibt den Wert an Duration kann folgende Werte haben: \\ 
+ \> time.Second, time.Millisecond, time.Microsecond, time.Nanosecond \\ 
 \end{tabbing}
 
+\newpage
 \subsection{panic und recover}
 Zwei Mechanismen die speziell für Fehlerbehandlung und Umgang mit Ausnahmefällen in \\ 
-Goroutinen kozeptiert sind. 
+Goroutinen kozeptiert sind. \\ 
 \textbf{panic} dieses Funktion beendet eine Goroutine sofort und löst eine Panik aus. \\ 
 Panik kann im Programm ausgelöst werden oder von Go selbst. \\ 
 Laufzeitfehler, Division durch Null, nil-Pointer... \\ 
@@ -812,6 +1038,7 @@ Recover gibt den Wert der Panik zurück oder nil wenn es keine Panik gibt.
   \end{minipage}
 \end{center}
 
+\newpage
 \subsection{worker}
 \textbf{workder} diese Funktion ist ein Ansatz, um Aufgaben in parallelen oder \\
 asynchronen Umgebungen zu Verarbeiten. \\
@@ -853,6 +1080,7 @@ asynchronen Umgebungen zu Verarbeiten. \\
  \> \verb| fmt.Sscanf() | \> Parst eine Zeichenkette \\ 
 \end{tabbing}
 
+\newpage
 \subsection{os}
 \begin{tabbing}
  \hspace{2mm} \= \hspace{50mm} \= \kill
@@ -896,6 +1124,10 @@ asynchronen Umgebungen zu Verarbeiten. \\
  \> Stream einer Ausgabe \\ 
  \> \verb| os.Stderr() | \\ 
  \> Stream einer Fehlermeldung \\ 
+\end{tabbing}
+\newpage
+\begin{tabbing}
+ \hspace{2mm} \= \hspace{50mm} \= \kill
  \> \textbf{os.FileMode} \\
  \> $0400$ \> Leserechte Besitzer \\ 
  \> $0040$ \> Leserechte Gruppen \\
@@ -920,6 +1152,7 @@ asynchronen Umgebungen zu Verarbeiten. \\
  \> \verb| os.ModeSetgid | \> Set-GID Bit \\ 
  \end{tabbing}
 
+ \newpage
 \subsection{bufio}
 \begin{tabbing}
  \hspace{2mm} \= \hspace{50mm} \= \kill
@@ -966,50 +1199,40 @@ asynchronen Umgebungen zu Verarbeiten. \\
  \> setzt eine Funktion, die definiert, wie der Scanner seine Eingabe aufteilt \\ 
 \end{tabbing}
 
+\newpage
 \subsection{math}
 \label{sec:math}
 \begin{tabbing}
  \hspace{2mm} \= \hspace{50mm} \= \kill
  \> Auszug aus math \>  sieh \ref{link:pkg} \\
  \> float64 \> alle Variablen sind float64 \\
- \> \\
  \> \textbf{Konstanten} \\ 
  \> math.Pi \> Wert von Pi \\ 
  \> math.E \> natrürlicher Logarithmus ln(e) euler \\ 
- \> \\ 
  \> \textbf{Absolutwert} \\
  \> math.Abs(x)\> absolutwert von x \\ 
- \> \\
  \> \textbf{Potenzierung} \\ 
  \> math.Pow(10, -3)\> gibt nur die Potenz an, \verb|10^-3| \\
- \> \\
  \> \textbf{Exponent} \\ 
  \> math.Exp(x)  \> Berechnet \verb|a^x| \\ 
  \> math.Exp2(x)\> Berechnet \verb|2^x| \\
- \> \\
  \> \textbf{Wurzel} \\ 
  \> math.Sqrt(x)\> Quadratwurzel von x \\ 
  \> math.Cbrt(x)\> Kubikwurzel von x \\
- \> \\
  \> \textbf{Runden} \\
  \> math.Round(x)\> Rundet x \\ 
  \> math.RoundToEven(x)\> Rundet auf gerade Ganzzahl \\ 
- \> \\
  \> \textbf{Abschneiden} \\ 
  \> math.Floor(x)\> gößte Ganzzahl, die kleiner oder gleich x ist \\ 
  \> math.Ceil(x)\> kleinste Ganzzahl, die größer oder gleich x ist \\ 
  \> math. Trunc(x)\> Kürzt Nachkommastellen und rundet gegen 0 \\ 
- \> \\
  \> \textbf{Min/Max} \\ 
  \> math.Max(x, y)\> gibt größer Zahl von x und y zurück \\ 
  \> math.Min(x, y)\> gibt kleinere Zahl von x und y zurück \\ 
- \> \\
  \> \textbf{Modulo} \\ 
  \> math.Mod(x, y)\> gibt Rest von x durch y zurück \\ 
- \> \\
  \> \textbf{Hypotenuse} \\ 
  \> math.Hypot(x, y)\> Länge des Vektors(x,y) \\ 
- \> \\
  \> \textbf{Triggonometrie} \\ 
  \> math.Sin(x)\> Sinus(x) \\ 
  \> math.Cos(x)\> Cosinus(x) \\ 
@@ -1019,7 +1242,6 @@ asynchronen Umgebungen zu Verarbeiten. \\
  \> math.Atan(x)\> Arkustangens(x) \\
  \> math.Atan2(y, x)\> Berechnet den Winkel zwischen, positiv X-Achse \\ 
  \> \> und Punkt(x, y) in Raianten \\
- \> \\
  \> \textbf{Logarithmus} \\ 
  \> math.Log(x)\> natrürlicher Logarithmus \\
  \> mat.Log10(x)\> Logarithmus zur Bais 10 \\ 
@@ -1051,7 +1273,67 @@ Befehle für Go-Routine \label{sec:runtime}
  \> \> damit bestimmte Daten weiterhin verfügbar bleiben \\
 \end{tabbing}
 
- \section{Ausführen}
+\subsection{strings}
+\begin{tabbing}
+ \hspace{2mm} \= \hspace{70mm} \= \kill
+ \> \verb| strings.Contains(s, substr string) | \\ 
+ \> Prueft ob s den substr enthaelt \\ 
+ \> \verb| strings.HasPrefix(s, prefix string) | \\ 
+ \> Prueft ob s mit dem prefix beginnt \\
+ \> \verb| strings.HasSuffix(s suffix string) | \\ 
+ \> Prueft ob x mit suffix endet \\ 
+ \> \verb| strings.ToUpper(s string) | \\ 
+ \> Konvertiert s in Grossbuchstaben \\ 
+ \> \verb| strings.ToLower(s strings) | \\ 
+ \> Konvertiert s in Kleinbuchstaben \\ 
+ \> \verb| strings.TrimSpace(s string) | \\ 
+ \> Entfernt fuehrende und nachfolgende Leerzeichen von s \\ 
+ \> \verb| strings.Split(s, sep string) | \\ 
+ \> Teilt den String in Slice, getrennt durch sep \\ 
+ \> \verb| strings.Join(sl []string, sep string) | 
+ \> verbindet sl zu einem String mit sep als Trennzeichen \\ 
+\end{tabbing}
+
+\newpage 
+\subsection{testing}
+\begin{tabbing}
+ \hspace{2mm} \= \hspace{70mm} \= \kill
+ \> \verb| testing.T.Run(name string, f func(t *testing.T)) bool | \\ 
+ \> Fuehrt einen Untertest mit dem gegeben Namen aus. \\ 
+ \> \verb| testing.B.Run(name string, f func(b *testing.B)) bool | \\ 
+ \> wie testing.T aber fuer Benchmarks \\ 
+ \> \verb| t.Error(args ...interface{}) | \\ 
+ \> loggt eine Fehlermeldung, der Test laueft aber weiter \\ 
+ \> \verb| t.Errorf(format string, args ...interface{}) | \\ 
+ \> wie t.Error aber formatiert \\ 
+ \> \verb| t.Fatal(args ..interface{}) | \\ 
+ \> loggt eine Fehlermeldung, beendet den Test danach \\ 
+ \> \verb| t.Fatalf(args ...interface{}) | \\ 
+ \> wie t.Fatal aber formatiert \\ 
+ \> \verb| t.Fail() | \\ 
+ \> markiet den Test als fehlgeschlagen, der Test laueft aber durch \\ 
+ \> \verb| t.FailNow() | \\ 
+ \> markiert den Test als fehlgeschlagen, der Test wird beendet \\ 
+ \> \verb| t.Log(args ...interface{}) | \\ 
+ \> loggt eine Nachricht, bei einem fehlgeschlagenen Test \\ 
+ \> \verb| t.Logff(format string, args ...interface{}) | \\ 
+ \> wie t.Log aber formatiert \\ 
+ \> \verb| t.Helper() | \\ 
+ \> markiert die Funktion als Hilfsfunktion, fuert bei Fehlern die Hilfsfunktion \\ 
+ \> aus und nicht die eigentliche Funktion \\ 
+ \> \verb| t.Skip(args ...interface{}) | \\ 
+ \> Ueberspringt den aktullen Test, markiert ihn aber nicht fehlgeschlagenen \\ 
+ \> \verb| b.ResetTimer() | \\ 
+ \> setzt den Timer des Benchmarktest zurueck \\ 
+ \> \verb| b.StopTimer() | \\ 
+ \> \verb| b.StartTime() | \\ 
+ \> startet oder stoppt den Timer des Benchmarks \\ 
+ \> \verb| bReprotAllocs() | \\ 
+ \> Bericht ueber Speicherallokation des Benchmarks \\ 
+\end{tabbing}
+
+\newpage
+\section{Ausführen}
 \subsection{Kompilieren/Ausführen}
 \begin{tabbing}
   \hspace{2mm} \= \hspace{50mm} \= \kill
@@ -1064,13 +1346,34 @@ Befehle für Go-Routine \label{sec:runtime}
   \> GOOS=linux GOARCH=amd64 go build bunga.go \\ 
   \> GOOS=darwin GOARCH=amd64 go build bunga. go (macOS)\\
 \end{tabbing}
+
 \subsection{Debugging}
 \begin{tabbing}
   \hspace{2mm} \= \hspace{50mm} \= \kill
   \> dlv debug bunga.go \> starten das Programm im Debugger \\
+  \> dlv exec ./bunga.exe \> startet bereits kompilierte Programme \\ 
+  \> break bunga.go:30 \> setzt einen Breakpoint in Zeile 30 \\ 
+  \> continue oder c \> macht weiter bis zum naechsten Breakpoint \\ 
+  \> next oder n \> geht zur naechsten Zeile, fuehrt keine Funktion aus \\ 
+  \> step oder s \> geht in die naechsten Funktion \\ 
+  \> print variablenname \> gibt den Wert einer Variable aus \\ 
+  \> p variablenname \> gibt den Wert einer Variable aus \\ 
+  \> locals \> Listet alle lokalen Variablen auf \\ 
+  \> goroutines \> zeigt alle aktiven Go-Routine \\ 
+  \> exit oder q \> beendet den Debugger \\
 \end{tabbing}
 
-\newpage
+\subsection{Testing}
+\begin{tabbing}
+  \hspace{2mm} \= \hspace{50mm} \= \kill
+  \> soll ausgefuehrt werden in dem Verzeichnis des zu testenden Programms \\ 
+  \> \verb| go test | \> fuehrt den Test aus \\ 
+  \> \verb| go test -v | \> detaillierte Ausgabe \\ 
+  \> \verb| go test -cover | \> Testabdeckung \\ 
+  \> \verb| go test -run | \> Filtern von Tests \\ 
+  \> \verb| go test -bench | \> Test fuer Benchmarks \\ 
+\end{tabbing}
+
 \section{Hello World!}
 \begin{center}
   \begin{minipage}{1.0\textwidth}
@@ -1086,6 +1389,7 @@ Befehle für Go-Routine \label{sec:runtime}
   \end{minipage}
 \end{center}
 
+\newpage
 \section{Installation}
 \subsection{Kompiler/Interpreter}
 \subsubsection{Arch Linux}
